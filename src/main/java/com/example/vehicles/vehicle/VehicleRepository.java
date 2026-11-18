@@ -1,11 +1,16 @@
 package com.example.vehicles.vehicle;
 
 import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
+
+    boolean existsByPlate(String plate);
+
+    boolean existsByPlateAndIdNot(String plate, Long id);
 
     // Pesquisa por texto na matrícula, marca ou modelo (o ?q= do Angular)
     @Query("""
