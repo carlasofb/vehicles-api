@@ -15,10 +15,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
-@AutoConfigureMockMvc   // necessário para injetar o MockMvc num @SpringBootTest
+@AutoConfigureMockMvc // necessário para injetar o MockMvc num @SpringBootTest
+@ActiveProfiles("test")
 class VehicleApiTest {
 
     private static final String BASE = "/api/v1/vehicles";
