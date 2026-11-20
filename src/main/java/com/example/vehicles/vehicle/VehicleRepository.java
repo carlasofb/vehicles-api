@@ -1,7 +1,8 @@
 package com.example.vehicles.vehicle;
 
 import java.util.List;
-
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -21,4 +22,14 @@ public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
             order by v.id
             """)
     List<Vehicle> search(@Param("q") String q);
+
+    // Mesma pesquisa, paginada com Slice: pede size+1 linhas para saber se há mais, sem COUNT(*)
+    @Query("""
+            select v from Vehicle v
+            where lower(v.plate) like lower(concat('%', :q, '%'))
+               or lower(v.brand) like lower(concat('%', :q, '%'))
+               or lower(v.model) like lower(concat('%', :q, '%'))
+            order by v.id
+            """)
+    Slice<Vehicle> searchSlice(@Param("q") String q, Pageable pageable);
 }
